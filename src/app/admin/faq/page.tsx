@@ -1,0 +1,139 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
+import { Plus, Pencil, Trash2, Search } from "lucide-react";
+import Link from "next/link";
+
+export default function FAQPage() {
+    const [faqs, setFaqs] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    useEffect(() => {
+        fetchFaqs();
+    }, []);
+
+    const fetchFaqs = async () => {
+        try {
+            const { data, error } = await supabase
+                .from("faqs")
+                .select("*")
+                .order("created_at", { ascending: false });
+
+            if (error) throw error;
+            setFaqs(data || []);
+        } catch (error) {
+            console.error("Error fetching FAQs:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!confirm("Are you sure you want to delete this FAQ?")) return;
+
+        try {
+            const { error } = await supabase.from("faqs").delete().eq("id", id);
+            if (error) throw error;
+            fetchFaqs();
+        } catch (error) {
+            console.error("Error deleting FAQ:", error);
+            alert("Failed to delete FAQ");
+        }
+    };
+
+    const filteredFaqs = faqs.filter((faq) =>
+        faq.question.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return (
+        <div>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                    <h1 className="text-2xl font-bold text-gray-900">FAQ</h1>
+                    <p className="text-gray-500 text-sm">Manage frequently asked questions</p>
+                </div>
+                <Link
+                    href="/admin/faq/new"
+                    className="inline-flex items-center justify-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add New FAQ
+                </Link>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div className="p-4 border-b border-gray-200">
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                        <input
+                            type="text"
+                            placeholder="Search questions..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
+                        />
+                    </div>
+                </div>
+
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                        <thead className="bg-gray-50 text-gray-500 text-xs uppercase">
+                            <tr>
+                                <th className="px-6 py-3 font-medium">Question</th>
+                                <th className="px-6 py-3 font-medium">Category</th>
+                                <th className="px-6 py-3 font-medium text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                            {loading ? (
+                                <tr>
+                                    <td colSpan={3} className="px-6 py-8 text-center text-gray-500">
+                                        Loading FAQs...
+                                    </td>
+                                </tr>
+                            ) : filteredFaqs.length === 0 ? (
+                                <tr>
+                                    <td colSpan={3} className="px-6 py-8 text-center text-gray-500">
+                                        No FAQs found.
+                                    </td>
+                                </tr>
+                            ) : (
+                                filteredFaqs.map((faq) => (
+                                    <tr key={faq.id} className="hover:bg-gray-50 transition-colors">
+                                        <td className="px-6 py-4">
+                                            <div className="font-medium text-gray-900">{faq.question}</div>
+                                            <div className="text-sm text-gray-500 truncate max-w-xs">
+                                                {faq.answer}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                {faq.category}
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-4 text-right space-x-2">
+                                            <Link
+                                                href={`/admin/faq/${faq.id}`}
+                                                className="inline-flex p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                            >
+                                                <Pencil className="w-4 h-4" />
+                                            </Link>
+                                            <button
+                                                onClick={() => handleDelete(faq.id)}
+                                                className="inline-flex p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    );
+}
