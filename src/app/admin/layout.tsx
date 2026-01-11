@@ -11,7 +11,8 @@ import {
     LogOut,
     Menu,
     X,
-    Image as ImageIcon
+    Image as ImageIcon,
+    MessageSquareQuote
 } from "lucide-react";
 
 export default function AdminLayout({
@@ -30,9 +31,10 @@ export default function AdminLayout({
 
     const navItems = [
         { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+        { name: "Banners", href: "/admin/banners", icon: ImageIcon },
         { name: "Products", href: "/admin/products", icon: Package },
         { name: "Portfolio", href: "/admin/portfolio", icon: Briefcase },
-        { name: "Banners", href: "/admin/banners", icon: ImageIcon },
+        { name: "Testimonials", href: "/admin/testimonials", icon: MessageSquareQuote },
         { name: "FAQ", href: "/admin/faq", icon: HelpCircle },
     ];
 

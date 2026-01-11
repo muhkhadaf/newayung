@@ -20,7 +20,7 @@ const Hero = () => {
                             transition={{ duration: 0.6 }}
                         >
                             <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-6">
-                                #1 Jasa Pembuatan Website & Desain
+                                Jasa Pembuatan Desain Logo, Website, dan Branding
                             </span>
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 mb-6">
                                 Bangun Identitas Digital yang <span className="text-primary">Memukau</span>

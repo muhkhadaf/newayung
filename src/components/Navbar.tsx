@@ -37,8 +37,12 @@ const Navbar = () => {
                 }`}
         >
             <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
-                <Link href="/" className="text-2xl font-bold text-primary">
-                    Ayung<span className="text-gray-800">Project</span>
+                <Link href="/" className="flex items-center">
+                    <img
+                        src="/Ayung_Project.png"
+                        alt="Ayung Project Logo"
+                        className="h-10 w-auto object-contain"
+                    />
                 </Link>
 
                 {/* Desktop Menu */}

@@ -27,7 +27,7 @@ export default function Home() {
       "addressCountry": "ID"
     },
     "priceRange": "$$",
-    "telephone": "+6281234567890",
+    "telephone": "+6289602981841",
     "url": "https://ayungproject.com"
   };
 
@@ -40,8 +40,8 @@ export default function Home() {
       <Navbar />
       <Hero />
       <About />
-      <BannerCarousel />
       <Services />
+      <BannerCarousel />
       <Portfolio />
       <Testimonials />
       <HowToOrder />

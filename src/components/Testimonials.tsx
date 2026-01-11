@@ -1,32 +1,43 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
-
-const testimonials = [
-    {
-        name: "Budi Santoso",
-        role: "CEO, TechStart",
-        content: "Ayung Project sangat profesional. Website yang mereka buat sangat cepat dan desainnya modern. Sangat puas dengan hasilnya!",
-        rating: 5,
-    },
-    {
-        name: "Siti Aminah",
-        role: "Owner, Cafe Kopi",
-        content: "Desain logo dan branding untuk cafe saya sangat bagus. Banyak pelanggan yang memuji desainnya. Terima kasih Ayung Project!",
-        rating: 5,
-    },
-    {
-        name: "Rizky Pratama",
-        role: "Marketing Manager",
-        content: "Layanan social media management-nya sangat membantu meningkatkan engagement di Instagram kami. Recommended!",
-        rating: 5,
-    },
-];
+import { Star, Quote } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 const Testimonials = () => {
+    const [testimonials, setTestimonials] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchTestimonials = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from("testimonials")
+                    .select("*")
+                    .eq("is_active", true)
+                    .order("created_at", { ascending: false });
+
+                if (error) throw error;
+                if (data) setTestimonials(data);
+            } catch (error) {
+                console.error("Error fetching testimonials:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTestimonials();
+    }, []);
+
+    if (loading) return null;
+    if (testimonials.length === 0) return null;
+
+    // Duplicate testimonials to create seamless loop
+    const carouselTestimonials = [...testimonials, ...testimonials, ...testimonials];
+
     return (
-        <section id="testimonials" className="py-20 bg-white">
+        <section id="testimonials" className="py-20 bg-white overflow-hidden">
             <div className="container mx-auto px-4 md:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <motion.h2
@@ -35,7 +46,7 @@ const Testimonials = () => {
                         viewport={{ once: true }}
                         className="text-primary font-semibold tracking-wide uppercase text-sm mb-2"
                     >
-                        Testimoni
+                        Testimonials
                     </motion.h2>
                     <motion.h3
                         initial={{ opacity: 0, y: 20 }}
@@ -44,37 +55,77 @@ const Testimonials = () => {
                         transition={{ delay: 0.1 }}
                         className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
                     >
-                        Apa Kata Klien Kami?
+                        Apa Kata Klien Kami
                     </motion.h3>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="text-gray-600"
+                    >
+                        Kepercayaan klien adalah prioritas utama kami. Berikut adalah pengalaman mereka bekerja sama dengan Ayung Project.
+                    </motion.p>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8">
-                    {testimonials.map((item, index) => (
+                <div className="relative w-full">
+                    <div className="flex overflow-hidden">
                         <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-gray-50 p-4 md:p-8 rounded-xl md:rounded-2xl border border-gray-100 relative"
+                            className="flex gap-8"
+                            animate={{
+                                x: ["0%", "-50%"],
+                            }}
+                            transition={{
+                                x: {
+                                    repeat: Infinity,
+                                    repeatType: "loop",
+                                    duration: 30,
+                                    ease: "linear",
+                                },
+                            }}
                         >
-                            <div className="flex gap-0.5 md:gap-1 mb-2 md:mb-4">
-                                {[...Array(item.rating)].map((_, i) => (
-                                    <Star key={i} className="w-3 h-3 md:w-5 md:h-5 fill-yellow-400 text-yellow-400" />
-                                ))}
-                            </div>
-                            <p className="text-gray-600 mb-3 md:mb-6 italic text-xs md:text-base line-clamp-4 md:line-clamp-none">"{item.content}"</p>
-                            <div className="flex items-center gap-2 md:gap-4">
-                                <div className="w-8 h-8 md:w-12 md:h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-sm md:text-xl flex-shrink-0">
-                                    {item.name.charAt(0)}
+                            {carouselTestimonials.map((testimonial, index) => (
+                                <div
+                                    key={`${testimonial.id}-${index}`}
+                                    className="bg-gray-50 p-8 rounded-2xl relative hover:shadow-lg transition-shadow duration-300 w-[350px] flex-shrink-0"
+                                >
+                                    <Quote className="absolute top-8 right-8 w-8 h-8 text-primary/10" />
+
+                                    <div className="flex gap-1 mb-4">
+                                        {[...Array(testimonial.rating)].map((_, i) => (
+                                            <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                                        ))}
+                                    </div>
+
+                                    <p className="text-gray-600 mb-6 relative z-10 line-clamp-4">
+                                        "{testimonial.message}"
+                                    </p>
+
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-12 h-12 rounded-full bg-gray-200 overflow-hidden relative shrink-0">
+                                            {testimonial.image_url ? (
+                                                <img
+                                                    src={testimonial.image_url}
+                                                    alt={testimonial.name}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-lg">
+                                                    {testimonial.name.charAt(0)}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-gray-900 line-clamp-1">{testimonial.name}</h4>
+                                            {testimonial.role && (
+                                                <p className="text-sm text-primary line-clamp-1">{testimonial.role}</p>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="min-w-0">
-                                    <h4 className="font-bold text-gray-900 text-xs md:text-base truncate">{item.name}</h4>
-                                    <p className="text-[10px] md:text-sm text-gray-500 truncate">{item.role}</p>
-                                </div>
-                            </div>
+                            ))}
                         </motion.div>
-                    ))}
+                    </div>
                 </div>
             </div>
         </section>

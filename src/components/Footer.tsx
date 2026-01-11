@@ -8,21 +8,25 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                     {/* Brand Info */}
                     <div>
-                        <Link href="/" className="text-2xl font-bold text-white mb-6 block">
-                            Ayung<span className="text-primary">Project</span>
+                        <Link href="/" className="flex items-center mb-6">
+                            <img
+                                src="/Ayung_project.png"
+                                alt="Ayung Project Icon"
+                                className="h-12 w-auto object-contain"
+                            />
                         </Link>
                         <p className="text-gray-400 mb-6 leading-relaxed">
                             Partner digital terpercaya untuk membantu bisnis Anda tumbuh melalui desain website profesional dan branding yang kuat.
                         </p>
                         <div className="flex space-x-4">
-                            <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                            <a href="https://www.instagram.com/ayungproject?igsh=MTE2bHRjczdkd3BtMg==" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
                                 <Instagram className="w-5 h-5" />
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
-                                <Facebook className="w-5 h-5" />
+                            <a href="mailto:projectayung@gmail.com" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                                <Mail className="w-5 h-5" />
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
-                                <Twitter className="w-5 h-5" />
+                            <a href="https://wa.me/6289602981841" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                                <Phone className="w-5 h-5" />
                             </a>
                         </div>
                     </div>
@@ -87,15 +91,15 @@ const Footer = () => {
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3">
                                 <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                                <span className="text-gray-400">Jl. Contoh No. 123, Jakarta Selatan, Indonesia</span>
+                                <span className="text-gray-400">Jl. Citanduy RT.005 RW.009 No.3, Kel. Cipayung, Kec. Ciputat, Kota Tangerang Selatan - Banten</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone className="w-5 h-5 text-primary flex-shrink-0" />
-                                <span className="text-gray-400">+62 812-3456-7890</span>
+                                <span className="text-gray-400">+62 896-0298-1841</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                                <span className="text-gray-400">info@ayungproject.com</span>
+                                <span className="text-gray-400">projectayung@gmail.com</span>
                             </li>
                         </ul>
                     </div>
