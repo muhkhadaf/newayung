@@ -26,10 +26,9 @@ export default function ProjectForm({ params }: { params: Promise<{ id: string }
     const categories = [
         "Logo Design",
         "Web Development",
-        "Branding",
-        "UI/UX Design",
         "Company Profile",
         "Social Media",
+        "Desain Lainnya",
     ];
 
     useEffect(() => {

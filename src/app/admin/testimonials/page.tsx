@@ -154,13 +154,12 @@ export default function TestimonialsPage() {
                                             <div className="flex items-center justify-end gap-2">
                                                 <button
                                                     onClick={() => toggleActive(t.id, t.is_active)}
-                                                    className={`p-2 rounded-lg transition-colors ${t.is_active
-                                                        ? "text-orange-600 hover:bg-orange-50"
-                                                        : "text-green-600 hover:bg-green-50"
+                                                    className={`px-3 py-1 rounded-lg text-xs font-medium transition-colors ${t.is_active
+                                                        ? "bg-orange-100 text-orange-700 hover:bg-orange-200"
+                                                        : "bg-green-100 text-green-700 hover:bg-green-200"
                                                         }`}
-                                                    title={t.is_active ? "Hide" : "Approve"}
                                                 >
-                                                    {t.is_active ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                                    {t.is_active ? "Tidak" : "Tampilkan"}
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(t.id)}

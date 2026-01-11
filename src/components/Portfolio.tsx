@@ -6,7 +6,7 @@ import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 
-const categories = ["Logo Design", "Web Development", "Branding", "UI/UX Design", "Company Profile", "Social Media"];
+const categories = ["Logo Design", "Web Development", "Company Profile", "Social Media", "Desain Lainnya"];
 
 const Portfolio = () => {
     const [activeCategory, setActiveCategory] = useState("Logo Design");

@@ -82,7 +82,7 @@ const Services = () => {
                             transition={{ delay: index * 0.1 }}
                             className={`bg-white rounded-2xl md:rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group overflow-hidden relative ${service.border_color || "group-hover:border-blue-200"}`}
                         >
-                            <Link href={`/services/${service.id}`} className="block h-full">
+                            <Link href={`/services/${service.slug || service.id}`} className="block h-full">
                                 {/* Decorative background blob */}
                                 <div className={`absolute -top-20 -right-20 w-64 h-64 rounded-full opacity-20 blur-3xl transition-all duration-500 group-hover:opacity-40 ${(service.accent || "bg-blue-100").split(" ")[0]}`} />
 
@@ -113,7 +113,17 @@ const Services = () => {
                                     <div className="flex items-center justify-between pt-3 md:pt-6 border-t border-gray-100 group-hover:border-gray-200 transition-colors">
                                         <div className="flex flex-col">
                                             <span className="text-[10px] md:text-xs text-gray-400 font-medium uppercase">Mulai dari</span>
-                                            <span className="text-sm md:text-xl font-bold text-gray-900">Rp {service.price}</span>
+                                            <span className="text-sm md:text-xl font-bold text-gray-900">
+                                                {(() => {
+                                                    const price = service.price;
+                                                    // If price contains non-numeric characters (like "jt" or "rb"), display as is
+                                                    if (/[^0-9]/.test(price)) {
+                                                        return `Rp ${price}`;
+                                                    }
+                                                    // Otherwise format as number with dots
+                                                    return `Rp ${parseInt(price).toLocaleString("id-ID")}`;
+                                                })()}
+                                            </span>
                                         </div>
                                         <button className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="md:w-5 md:h-5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>

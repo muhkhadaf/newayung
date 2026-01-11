@@ -12,7 +12,8 @@ import {
     Menu,
     X,
     Image as ImageIcon,
-    MessageSquareQuote
+    MessageSquareQuote,
+    User
 } from "lucide-react";
 
 export default function AdminLayout({
@@ -36,6 +37,7 @@ export default function AdminLayout({
         { name: "Portfolio", href: "/admin/portfolio", icon: Briefcase },
         { name: "Testimonials", href: "/admin/testimonials", icon: MessageSquareQuote },
         { name: "FAQ", href: "/admin/faq", icon: HelpCircle },
+        { name: "Users", href: "/admin/users", icon: User },
     ];
 
     return (
@@ -55,7 +57,11 @@ export default function AdminLayout({
             >
                 <div className="h-full flex flex-col">
                     <div className="h-16 flex items-center px-6 border-b border-gray-200">
-                        <span className="text-xl font-bold text-primary">Ayung Admin</span>
+                        <img
+                            src="/Ayung_Project.png"
+                            alt="Ayung Admin"
+                            className="h-8 w-auto object-contain"
+                        />
                     </div>
 
                     <nav className="flex-1 px-4 py-6 space-y-1">
@@ -93,7 +99,11 @@ export default function AdminLayout({
             <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
                 {/* Mobile Header */}
                 <header className="md:hidden bg-white border-b border-gray-200 h-16 flex items-center px-4 justify-between">
-                    <span className="text-lg font-bold text-primary">Ayung Admin</span>
+                    <img
+                        src="/Ayung_Project.png"
+                        alt="Ayung Admin"
+                        className="h-8 w-auto object-contain"
+                    />
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                         className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none"

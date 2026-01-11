@@ -23,6 +23,7 @@ export default function ProductForm({ params }: { params: Promise<{ id: string }
         border_color: "group-hover:border-blue-200", // Default border
         long_description: "",
         features: [] as string[],
+        slug: "",
     });
 
     useEffect(() => {
@@ -50,6 +51,7 @@ export default function ProductForm({ params }: { params: Promise<{ id: string }
                     border_color: data.border_color || "group-hover:border-blue-200",
                     long_description: data.long_description || "",
                     features: data.features || [],
+                    slug: data.slug || "",
                 });
             }
         } catch (error) {
@@ -124,9 +126,9 @@ export default function ProductForm({ params }: { params: Promise<{ id: string }
                 if (error) throw error;
             }
             router.push("/admin/products");
-        } catch (error) {
-            console.error("Error saving product:", error);
-            alert("Failed to save product");
+        } catch (error: any) {
+            console.error("Error saving product:", JSON.stringify(error, null, 2));
+            alert(`Failed to save product: ${error.message || JSON.stringify(error)}`);
         } finally {
             setLoading(false);
         }
@@ -153,11 +155,51 @@ export default function ProductForm({ params }: { params: Promise<{ id: string }
                         type="text"
                         name="title"
                         value={formData.title}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                            const title = e.target.value;
+                            // Auto-generate slug if it's new or empty
+                            const slug = title
+                                .toLowerCase()
+                                .replace(/[^a-z0-9]+/g, "-")
+                                .replace(/(^-|-$)+/g, "");
+
+                            setFormData(prev => ({
+                                ...prev,
+                                title,
+                                // Only auto-update slug if it wasn't manually edited (simplified: always update for now or check if match)
+                                // For better UX, let's just update it if it matches the old title slugified, or if it's empty.
+                                // But for simplicity in this step, let's just update title. We'll handle slug in its own field change or effect.
+                            }));
+
+                            // Simple auto-gen:
+                            if (!formData.slug || formData.slug === formData.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "")) {
+                                setFormData(prev => ({ ...prev, title, slug }));
+                            } else {
+                                setFormData(prev => ({ ...prev, title }));
+                            }
+                        }}
                         required
                         className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
                         placeholder="e.g. Web Development"
                     />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Slug (URL)</label>
+                    <div className="flex rounded-md shadow-sm">
+                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                            /services/
+                        </span>
+                        <input
+                            type="text"
+                            name="slug"
+                            value={formData.slug}
+                            onChange={handleChange}
+                            className="flex-1 block w-full px-3 py-2 border border-gray-300 rounded-none rounded-r-md focus:ring-primary focus:border-primary sm:text-sm"
+                            placeholder="web-development"
+                        />
+                    </div>
+                    <p className="mt-1 text-xs text-gray-500">Leave empty to auto-generate from title.</p>
                 </div>
 
                 <div>

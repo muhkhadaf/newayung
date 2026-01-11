@@ -8,19 +8,31 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-export default function ServiceDetailPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = use(params);
+export default function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = use(params);
     const [service, setService] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchService = async () => {
             try {
-                const { data, error } = await supabase
+                // Try fetching by slug first
+                let { data, error } = await supabase
                     .from("services")
                     .select("*")
-                    .eq("id", id)
+                    .eq("slug", slug)
                     .single();
+
+                // If not found by slug, and slug looks like a UUID, try fetching by ID (backward compatibility)
+                if ((!data || error) && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug)) {
+                    const res = await supabase
+                        .from("services")
+                        .select("*")
+                        .eq("id", slug)
+                        .single();
+                    data = res.data;
+                    error = res.error;
+                }
 
                 if (error) throw error;
                 if (data) setService(data);
@@ -32,7 +44,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
         };
 
         fetchService();
-    }, [id]);
+    }, [slug]);
 
     if (loading) {
         return (
