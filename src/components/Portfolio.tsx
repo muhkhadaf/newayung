@@ -113,12 +113,12 @@ const Portfolio = () => {
                                 className="group relative overflow-hidden rounded-lg md:rounded-2xl shadow-lg cursor-pointer bg-white"
                             >
                                 <Link href={`/portfolio/${project.id}`} className="block h-full">
-                                    <div className={`aspect-[4/3] relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110 bg-gray-100`}>
+                                    <div className={`${activeCategory !== "Social Media" ? "aspect-square p-4" : "aspect-[4/3]"} relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110 bg-gray-100`}>
                                         {project.image_url ? (
                                             <img
                                                 src={project.image_url}
                                                 alt={project.title}
-                                                className="w-full h-full object-cover"
+                                                className={`w-full h-full ${activeCategory !== "Social Media" ? "object-contain" : "object-cover"}`}
                                             />
                                         ) : (
                                             <span className={`text-gray-400 font-bold opacity-20 text-center ${activeCategory === "Logo Design" ? "text-[10px] px-1" : "text-lg px-2"} md:text-2xl`}>
