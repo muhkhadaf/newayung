@@ -10,7 +10,7 @@ const Footer = () => {
                     <div>
                         <Link href="/" className="flex items-center mb-6">
                             <img
-                                src="/Ayung_project.png"
+                                src="/Ayungicon.png"
                                 alt="Ayung Project Icon"
                                 className="h-12 w-auto object-contain"
                             />
