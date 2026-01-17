@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     apple: "/Ayungicon.png",
   },
   verification: {
-    google: "google-site-verification-code", // Placeholder, user needs to add this
+    google: "gnMKPw7ABvYkBk8SR2JiGm6-Pz-rUwMY5rI32cWIcKM",
   },
 };
 
