@@ -16,16 +16,15 @@ export default function FAQForm({ params }: { params: Promise<{ id: string }> })
     const [formData, setFormData] = useState({
         question: "",
         answer: "",
-        category: "Desain Logo",
+        category: "Logo Design",
     });
 
     const categories = [
-        "Desain Logo",
+        "Logo Design",
         "Web Development",
         "Company Profile",
-        "Social Media Design",
-        "Desain Kemasan",
-        "UI/UX Design",
+        "Social Media",
+        "Desain Lainnya",
     ];
 
     useEffect(() => {

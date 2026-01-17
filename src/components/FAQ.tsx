@@ -5,17 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
-const categories = [
-    "Desain Logo",
-    "Web Development",
-    "Company Profile",
-    "Social Media Design",
-    "Desain Kemasan",
-    "UI/UX Design"
-];
+const categories = ["Logo Design", "Web Development", "Company Profile", "Social Media", "Desain Lainnya"];
 
 const FAQ = () => {
-    const [activeCategory, setActiveCategory] = useState("Desain Logo");
+    const [activeCategory, setActiveCategory] = useState("Logo Design");
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [faqs, setFaqs] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
