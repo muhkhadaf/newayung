@@ -110,10 +110,10 @@ const Portfolio = () => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
                                 transition={{ duration: 0.3 }}
-                                className="group relative overflow-hidden rounded-lg md:rounded-2xl shadow-lg cursor-pointer bg-white"
+                                className="group relative overflow-hidden rounded-lg md:rounded-2xl cursor-pointer"
                             >
                                 <Link href={`/portfolio/${project.id}`} className="block h-full">
-                                    <div className={`${activeCategory !== "Social Media" ? "aspect-square p-4" : "aspect-[4/3]"} relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110 bg-gray-100`}>
+                                    <div className={`${activeCategory !== "Social Media" ? "aspect-square" : "aspect-[4/3]"} p-0 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110 bg-gray-100`}>
                                         {project.image_url ? (
                                             <img
                                                 src={project.image_url}
@@ -140,11 +140,6 @@ const Portfolio = () => {
                     </AnimatePresence>
                 </motion.div>
 
-                <div className="text-center mt-12">
-                    <Link href="#" className="inline-block px-8 py-3 rounded-full border border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-all duration-300">
-                        Lihat Semua Portfolio
-                    </Link>
-                </div>
             </div>
         </section>
     );

@@ -19,13 +19,13 @@ const Footer = () => {
                             Partner digital terpercaya untuk membantu bisnis Anda tumbuh melalui desain website profesional dan branding yang kuat.
                         </p>
                         <div className="flex space-x-4">
-                            <a href="https://www.instagram.com/ayungproject?igsh=MTE2bHRjczdkd3BtMg==" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                            <a href="https://www.instagram.com/ayungproject?igsh=MTE2bHRjczdkd3BtMg==" aria-label="Instagram" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
                                 <Instagram className="w-5 h-5" />
                             </a>
-                            <a href="mailto:projectayung@gmail.com" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                            <a href="mailto:projectayung@gmail.com" aria-label="Email" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
                                 <Mail className="w-5 h-5" />
                             </a>
-                            <a href="https://wa.me/6289602981841" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                            <a href="https://wa.me/6289602981841" aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
                                 <Phone className="w-5 h-5" />
                             </a>
                         </div>
@@ -33,7 +33,7 @@ const Footer = () => {
 
                     {/* Quick Links */}
                     <div>
-                        <h4 className="text-lg font-bold mb-6">Quick Links</h4>
+                        <h3 className="text-lg font-bold mb-6">Quick Links</h3>
                         <ul className="space-y-4">
                             <li>
                                 <Link href="#about" className="text-gray-400 hover:text-primary transition-colors">
@@ -60,7 +60,7 @@ const Footer = () => {
 
                     {/* Services */}
                     <div>
-                        <h4 className="text-lg font-bold mb-6">Layanan</h4>
+                        <h3 className="text-lg font-bold mb-6">Layanan</h3>
                         <ul className="space-y-4">
                             <li>
                                 <Link href="#" className="text-gray-400 hover:text-primary transition-colors">
@@ -87,7 +87,7 @@ const Footer = () => {
 
                     {/* Contact */}
                     <div id="contact">
-                        <h4 className="text-lg font-bold mb-6">Hubungi Kami</h4>
+                        <h3 className="text-lg font-bold mb-6">Hubungi Kami</h3>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3">
                                 <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
