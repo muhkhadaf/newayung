@@ -82,7 +82,7 @@ const BannerCarousel = () => {
 
     return (
         <section
-            className="relative w-full max-w-[500px] aspect-square mx-auto overflow-hidden bg-black rounded-xl shadow-lg my-8"
+            className="relative w-full h-[200px] md:h-[400px] lg:h-[500px] mx-auto overflow-hidden my-8"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
         >
